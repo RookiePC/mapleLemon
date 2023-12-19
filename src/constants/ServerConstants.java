@@ -40,12 +40,13 @@ public class ServerConstants {
     public static final int MTS_BASE = 0;
     public static final int MTS_TAX = 5;
     public static final int MTS_MESO = 2500;
+    public static final String SQL_DRIVER_NAME = "org.mariadb.jdbc.Driver";
     public static String SQL_IP = "127.0.0.1";
     public static String SQL_PORT = "3306";
     public static String SQL_USER = "root";
     public static String SQL_PASSWORD = "maplestory";
     public static int SQL_SAVETIME = 6;
-    public static String SQL_DATABASE = "maplestory";
+    public static String SQL_DATABASE = "maple027";
     public static long SQL_TIMEOUT = 30000;
     public static String master;
 

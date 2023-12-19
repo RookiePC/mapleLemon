@@ -28,7 +28,7 @@ public class DatabaseConnection {
 
     static {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(ServerConstants.SQL_DRIVER_NAME);
         } catch (ClassNotFoundException e) {
             System.out.println("[数据库信息] 找不到JDBC驱动.");
             System.exit(0);
@@ -88,10 +88,10 @@ public class DatabaseConnection {
 
     private static DruidDataSource connectToDB() {
         DruidDataSource dataSource = new DruidDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setDriverClassName(ServerConstants.SQL_DRIVER_NAME);
         dataSource.setUsername(ServerConstants.SQL_USER);
         dataSource.setPassword(ServerConstants.SQL_PASSWORD);
-        dataSource.setUrl("jdbc:mysql://" + ServerConstants.SQL_IP + ":" + ServerConstants.SQL_PORT + "/" + ServerConstants.SQL_DATABASE + "?autoReconnect=true&characterEncoding=GBK&serverTimezone=GMT%2B8&zeroDateTimeBehavior=convertToNull");
+        dataSource.setUrl("jdbc:mariadb://" + ServerConstants.SQL_IP + ":" + ServerConstants.SQL_PORT + "/" + ServerConstants.SQL_DATABASE + "?autoReconnect=true&characterEncoding=UTF8&serverTimezone=GMT%2B8&zeroDateTimeBehavior=convertToNull");
         dataSource.setInitialSize(10);
         dataSource.setMinIdle(1);
         dataSource.setMaxActive(100);

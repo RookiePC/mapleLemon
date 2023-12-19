@@ -23,10 +23,18 @@ TY老后生
 
 架设端步骤：
 
-1. 安装JDK7，mysql5.5
-2. 编译源码，导入数据库
-3. 开启服务端，打开登录器进入游戏
-4. 可用帐号：icelemon1314 密码：admin
+1. 安装JDK11，mariaDB11.2.x （开发者目前的开发环境）。
+2. 在 MariaDB 中创建数据库（暂时记作 `maple027`)。
+3. 执行 `tools/database/maplestory.sql` 以向数据库 `maple027` 中导入必要数据。
+4. 解压项目中 `wz.rar` 至项目根目录。
+5. 使用你的 IDE 打开此项目，进行 gradle 初始化。
+6. 修改以下文件中的数据库相关配置字段：
+  - `resources/META-INF/persistence.xml`
+  - `src/constants/ServerConstants.java`
+  - `config.ini`
+7. 编译源码。
+8. 开启服务端，打开登录器进入游戏。
+9. 可用帐号：icelemon1314 密码：admin。
 
 注意：
 1. 不要用bat登录，直接用解压好的exe登录
