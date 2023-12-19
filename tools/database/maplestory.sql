@@ -12,11 +12,72 @@ File Encoding         : 65001
 
 Date: 2016-01-08 11:29:59
 */
-
+SET FOREIGN_KEY_CHECKS=0;
+DROP TABLE IF EXISTS `accounts`;
+DROP TABLE IF EXISTS `characters`;
+DROP TABLE IF EXISTS `buddies`;
+DROP TABLE IF EXISTS `wz_queststatus`;
+DROP TABLE IF EXISTS `wz_questrewarddata`;
+DROP TABLE IF EXISTS `wz_questreqdata`;
+DROP TABLE IF EXISTS `wz_questpartydata`;
+DROP TABLE IF EXISTS `wz_questdata`;
+DROP TABLE IF EXISTS `wz_oxdata`;
+DROP TABLE IF EXISTS `wz_questcompletedata`;
+DROP TABLE IF EXISTS `wz_itemrewarddata`;
+DROP TABLE IF EXISTS `wz_mobskilldata`;
+DROP TABLE IF EXISTS `wz_itemequipdata`;
+DROP TABLE IF EXISTS `wz_itemadddata`;
+DROP TABLE IF EXISTS `wz_itemdata`;
+DROP TABLE IF EXISTS `wz_hairdata`;
+DROP TABLE IF EXISTS `wz_facedata`;
+DROP TABLE IF EXISTS `wishlist`;
+DROP TABLE IF EXISTS `trocklocations`;
+DROP TABLE IF EXISTS `storages`;
+DROP TABLE IF EXISTS `speedruns`;
+DROP TABLE IF EXISTS `spawns`;
+DROP TABLE IF EXISTS `skills_cooldowns`;
+DROP TABLE IF EXISTS `skills`;
+DROP TABLE IF EXISTS `sidekicks`;
+DROP TABLE IF EXISTS `shops`;
+DROP TABLE IF EXISTS `playernpcs_equip`;
+DROP TABLE IF EXISTS `shopitems`;
+DROP TABLE IF EXISTS `shares`;
+DROP TABLE IF EXISTS `scroll_log`;
+DROP TABLE IF EXISTS `savedlocations`;
+DROP TABLE IF EXISTS `rings`;
+DROP TABLE IF EXISTS `reports`;
+DROP TABLE IF EXISTS `reactordrops`;
+DROP TABLE IF EXISTS `quickslot`;
+DROP TABLE IF EXISTS `queststatus`;
+DROP TABLE IF EXISTS `questinfo`;
+DROP TABLE IF EXISTS `pqlog`;
+DROP TABLE IF EXISTS `pokemon`;
+DROP TABLE IF EXISTS `playernpcs`;
+DROP TABLE IF EXISTS `pets`;
+DROP TABLE IF EXISTS `nxcode`;
+DROP TABLE IF EXISTS `notes`;
+DROP TABLE IF EXISTS `mountdata`;
+DROP TABLE IF EXISTS `keymap`;
+DROP TABLE IF EXISTS `itemsearch`;
+DROP TABLE IF EXISTS `inventoryslot`;
+DROP TABLE IF EXISTS `inventorylog`;
+DROP TABLE IF EXISTS `drop_data_global`;
+DROP TABLE IF EXISTS `inventoryequipment`;
+DROP TABLE IF EXISTS `inventoryitems`;
+DROP TABLE IF EXISTS `imps`;
+DROP TABLE IF EXISTS `hiredmerch`;
+DROP TABLE IF EXISTS `gmlog`;
+DROP TABLE IF EXISTS `gifts`;
+DROP TABLE IF EXISTS `familiars`;
+DROP TABLE IF EXISTS `famelog`;
+DROP TABLE IF EXISTS `drop_data`;
+DROP TABLE IF EXISTS `cashshop_modified_items`;
+DROP TABLE IF EXISTS `cashshop_log`;
+DROP TABLE IF EXISTS `cashshop_limit_sell`;
+SET FOREIGN_KEY_CHECKS=1;
 -- ----------------------------
 -- Table structure for accounts
 -- ----------------------------
-DROP TABLE IF EXISTS `accounts`;
 CREATE TABLE `accounts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(13) NOT NULL DEFAULT '',
@@ -51,7 +112,7 @@ CREATE TABLE `accounts` (
   UNIQUE KEY `name` (`name`),
   KEY `ranking1` (`id`,`banned`,`gm`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of accounts
@@ -60,98 +121,8 @@ INSERT INTO `accounts` VALUES ('1', 'icelemon1314', 'd033e22ae348aeb5660fc2140ae
 INSERT INTO `accounts` VALUES ('2', 'icelemon0000', 'd033e22ae348aeb5660fc2140aec35850c4da997', null, null, null, '0', '0', '2016-01-07 13:49:21', '2015-11-02 13:05:34', '0000-00-00', null, null, '0', null, null, null, '0000-00-00 00:00:00', null, '0', '/127.0.0.1', '0', '0', '0', '2016-01-07 13:47:11', null, null, '0', '0');
 
 -- ----------------------------
--- Table structure for buddies
--- ----------------------------
-DROP TABLE IF EXISTS `buddies`;
-CREATE TABLE `buddies` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `characterid` int(11) NOT NULL,
-  `groupname` varchar(16) NOT NULL DEFAULT '群未定',
-  `buddyid` int(11) NOT NULL,
-  `pending` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `buddies_ibfk_1` (`characterid`),
-  KEY `buddyid` (`buddyid`),
-  KEY `id` (`id`),
-  CONSTRAINT `buddies_ibfk_1` FOREIGN KEY (`characterid`) REFERENCES `characters` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
-
--- ----------------------------
--- Records of buddies
--- ----------------------------
-
--- ----------------------------
--- Table structure for cashshop_limit_sell
--- ----------------------------
-DROP TABLE IF EXISTS `cashshop_limit_sell`;
-CREATE TABLE `cashshop_limit_sell` (
-  `serial` int(11) NOT NULL,
-  `amount` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`serial`)
-) ENGINE=MyISAM DEFAULT CHARSET=gbk;
-
--- ----------------------------
--- Records of cashshop_limit_sell
--- ----------------------------
-
--- ----------------------------
--- Table structure for cashshop_log
--- ----------------------------
-DROP TABLE IF EXISTS `cashshop_log`;
-CREATE TABLE `cashshop_log` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `accId` int(11) NOT NULL DEFAULT '0' COMMENT '购买者的帐号ID',
-  `chrId` int(11) NOT NULL DEFAULT '0' COMMENT '购买者的角色ID',
-  `name` varchar(13) CHARACTER SET gb2312 NOT NULL DEFAULT '' COMMENT '购买者的名字',
-  `SN` int(11) NOT NULL DEFAULT '0' COMMENT '商城道具的SNid',
-  `itemId` int(11) NOT NULL DEFAULT '0' COMMENT '商城道具的物品ID',
-  `type` int(11) NOT NULL DEFAULT '1' COMMENT '消费的类型 1=点卷 2=抵用卷',
-  `price` int(11) NOT NULL DEFAULT '0' COMMENT '商城道具的价格',
-  `count` int(11) NOT NULL DEFAULT '0' COMMENT '购买商城道具的数量',
-  `cash` int(11) NOT NULL DEFAULT '0' COMMENT '角色剩余点卷数量',
-  `points` int(11) NOT NULL DEFAULT '0' COMMENT '角色剩余抵用卷数量',
-  `itemlog` text NOT NULL COMMENT '商城购买道具的操作日志',
-  `Time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '购买商城道具的时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=gbk;
-
--- ----------------------------
--- Records of cashshop_log
--- ----------------------------
-INSERT INTO `cashshop_log` VALUES ('1', '1', '4', 'icelemon1314', '10000091', '2082000', '1', '3000', '10', '6911', '22222', 'icelemon1314 购买道具: 高质地喇叭', '2015-08-14 23:37:04');
-INSERT INTO `cashshop_log` VALUES ('2', '1', '4', 'icelemon1314', '10000091', '2082000', '1', '3000', '10', '3911', '22222', 'icelemon1314 购买道具: 高质地喇叭', '2015-08-14 23:39:18');
-
--- ----------------------------
--- Table structure for cashshop_modified_items
--- ----------------------------
-DROP TABLE IF EXISTS `cashshop_modified_items`;
-CREATE TABLE `cashshop_modified_items` (
-  `serial` int(11) NOT NULL,
-  `discount_price` int(11) NOT NULL DEFAULT '-1',
-  `mark` tinyint(1) NOT NULL DEFAULT '-1',
-  `showup` tinyint(1) NOT NULL DEFAULT '0',
-  `itemid` int(11) NOT NULL DEFAULT '0',
-  `priority` tinyint(3) NOT NULL DEFAULT '0',
-  `package` tinyint(1) NOT NULL DEFAULT '0',
-  `period` tinyint(3) NOT NULL DEFAULT '0',
-  `gender` tinyint(1) NOT NULL DEFAULT '0',
-  `count` tinyint(3) NOT NULL DEFAULT '0',
-  `meso` int(11) NOT NULL DEFAULT '0',
-  `unk_1` tinyint(1) NOT NULL DEFAULT '0',
-  `unk_2` tinyint(1) NOT NULL DEFAULT '0',
-  `unk_3` tinyint(1) NOT NULL DEFAULT '0',
-  `extra_flags` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`serial`)
-) ENGINE=MyISAM DEFAULT CHARSET=gbk;
-
--- ----------------------------
--- Records of cashshop_modified_items
--- ----------------------------
-
--- ----------------------------
 -- Table structure for characters
 -- ----------------------------
-DROP TABLE IF EXISTS `characters`;
 CREATE TABLE `characters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `accountid` int(11) NOT NULL DEFAULT '0',
@@ -237,17 +208,107 @@ CREATE TABLE `characters` (
   KEY `familyid` (`familyid`),
   KEY `marriageId` (`marriageId`),
   KEY `seniorid` (`seniorid`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of characters
 -- ----------------------------
 INSERT INTO `characters` VALUES ('4', '1', '0', 'icelemon1314', '30', '2558', '60', '55', '25', '15', '1', '1028', '1039', '1028', '114939', '2', '421', '0', '0', '0', '31002', '21000', '934', '1010000', '0', '6', '-1', '20', '2015-04-09 19:49:11', '0', '5', '5', '0', '-1', '412', '0', '1', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
 
+
+-- ----------------------------
+-- Table structure for buddies
+-- ----------------------------
+
+CREATE TABLE `buddies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `characterid` int(11) NOT NULL,
+  `groupname` varchar(16) NOT NULL DEFAULT '群未定',
+  `buddyid` int(11) NOT NULL,
+  `pending` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `buddies_ibfk_1` (`characterid`),
+  KEY `buddyid` (`buddyid`),
+  KEY `id` (`id`),
+  CONSTRAINT `buddies_ibfk_1` FOREIGN KEY (`characterid`) REFERENCES `characters` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Records of buddies
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for cashshop_limit_sell
+-- ----------------------------
+
+CREATE TABLE `cashshop_limit_sell` (
+  `serial` int(11) NOT NULL,
+  `amount` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`serial`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of cashshop_limit_sell
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for cashshop_log
+-- ----------------------------
+
+CREATE TABLE `cashshop_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `accId` int(11) NOT NULL DEFAULT '0' COMMENT '购买者的帐号ID',
+  `chrId` int(11) NOT NULL DEFAULT '0' COMMENT '购买者的角色ID',
+  `name` varchar(13) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '购买者的名字',
+  `SN` int(11) NOT NULL DEFAULT '0' COMMENT '商城道具的SNid',
+  `itemId` int(11) NOT NULL DEFAULT '0' COMMENT '商城道具的物品ID',
+  `type` int(11) NOT NULL DEFAULT '1' COMMENT '消费的类型 1=点卷 2=抵用卷',
+  `price` int(11) NOT NULL DEFAULT '0' COMMENT '商城道具的价格',
+  `count` int(11) NOT NULL DEFAULT '0' COMMENT '购买商城道具的数量',
+  `cash` int(11) NOT NULL DEFAULT '0' COMMENT '角色剩余点卷数量',
+  `points` int(11) NOT NULL DEFAULT '0' COMMENT '角色剩余抵用卷数量',
+  `itemlog` text NOT NULL COMMENT '商城购买道具的操作日志',
+  `Time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '购买商城道具的时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of cashshop_log
+-- ----------------------------
+INSERT INTO `cashshop_log` VALUES ('1', '1', '4', 'icelemon1314', '10000091', '2082000', '1', '3000', '10', '6911', '22222', 'icelemon1314 购买道具: 高质地喇叭', '2015-08-14 23:37:04');
+INSERT INTO `cashshop_log` VALUES ('2', '1', '4', 'icelemon1314', '10000091', '2082000', '1', '3000', '10', '3911', '22222', 'icelemon1314 购买道具: 高质地喇叭', '2015-08-14 23:39:18');
+
+-- ----------------------------
+-- Table structure for cashshop_modified_items
+-- ----------------------------
+
+CREATE TABLE `cashshop_modified_items` (
+  `serial` int(11) NOT NULL,
+  `discount_price` int(11) NOT NULL DEFAULT '-1',
+  `mark` tinyint(1) NOT NULL DEFAULT '-1',
+  `showup` tinyint(1) NOT NULL DEFAULT '0',
+  `itemid` int(11) NOT NULL DEFAULT '0',
+  `priority` tinyint(3) NOT NULL DEFAULT '0',
+  `package` tinyint(1) NOT NULL DEFAULT '0',
+  `period` tinyint(3) NOT NULL DEFAULT '0',
+  `gender` tinyint(1) NOT NULL DEFAULT '0',
+  `count` tinyint(3) NOT NULL DEFAULT '0',
+  `meso` int(11) NOT NULL DEFAULT '0',
+  `unk_1` tinyint(1) NOT NULL DEFAULT '0',
+  `unk_2` tinyint(1) NOT NULL DEFAULT '0',
+  `unk_3` tinyint(1) NOT NULL DEFAULT '0',
+  `extra_flags` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`serial`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of cashshop_modified_items
+-- ----------------------------
+
 -- ----------------------------
 -- Table structure for drop_data
 -- ----------------------------
-DROP TABLE IF EXISTS `drop_data`;
+
 CREATE TABLE `drop_data` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `mobID` int(11) NOT NULL DEFAULT '0',
@@ -7803,7 +7864,7 @@ INSERT INTO `drop_data` VALUES ('7551', '9001003', '4031059', '10000', '1', '1',
 -- ----------------------------
 -- Table structure for drop_data_global
 -- ----------------------------
-DROP TABLE IF EXISTS `drop_data_global`;
+
 CREATE TABLE `drop_data_global` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `continent` int(11) NOT NULL,
@@ -7816,7 +7877,7 @@ CREATE TABLE `drop_data_global` (
   `comments` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `mobid` (`continent`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of drop_data_global
@@ -7825,7 +7886,7 @@ CREATE TABLE `drop_data_global` (
 -- ----------------------------
 -- Table structure for famelog
 -- ----------------------------
-DROP TABLE IF EXISTS `famelog`;
+
 CREATE TABLE `famelog` (
   `famelogid` int(11) NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL DEFAULT '0',
@@ -7834,7 +7895,7 @@ CREATE TABLE `famelog` (
   PRIMARY KEY (`famelogid`),
   KEY `characterid` (`characterid`),
   CONSTRAINT `famelog_ibfk_1` FOREIGN KEY (`characterid`) REFERENCES `characters` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of famelog
@@ -7843,7 +7904,7 @@ CREATE TABLE `famelog` (
 -- ----------------------------
 -- Table structure for familiars
 -- ----------------------------
-DROP TABLE IF EXISTS `familiars`;
+
 CREATE TABLE `familiars` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL DEFAULT '0',
@@ -7853,7 +7914,7 @@ CREATE TABLE `familiars` (
   `expiry` bigint(20) NOT NULL DEFAULT '0',
   `vitality` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of familiars
@@ -7862,7 +7923,7 @@ CREATE TABLE `familiars` (
 -- ----------------------------
 -- Table structure for gifts
 -- ----------------------------
-DROP TABLE IF EXISTS `gifts`;
+
 CREATE TABLE `gifts` (
   `giftid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `recipient` int(11) NOT NULL DEFAULT '0',
@@ -7872,7 +7933,7 @@ CREATE TABLE `gifts` (
   `uniqueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`giftid`),
   KEY `recipient` (`recipient`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of gifts
@@ -7881,21 +7942,21 @@ CREATE TABLE `gifts` (
 -- ----------------------------
 -- Table structure for gmlog
 -- ----------------------------
-DROP TABLE IF EXISTS `gmlog`;
+
 CREATE TABLE `gmlog` (
   `gmlogid` int(11) NOT NULL AUTO_INCREMENT,
   `cid` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(13) CHARACTER SET gb2312 NOT NULL DEFAULT '',
+  `name` varchar(13) CHARACTER SET utf8 NOT NULL DEFAULT '',
   `command` text NOT NULL,
   `mapid` int(11) NOT NULL DEFAULT '0',
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`gmlogid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for hiredmerch
 -- ----------------------------
-DROP TABLE IF EXISTS `hiredmerch`;
+
 CREATE TABLE `hiredmerch` (
   `PackageId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(10) unsigned DEFAULT '0',
@@ -7907,7 +7968,7 @@ CREATE TABLE `hiredmerch` (
   PRIMARY KEY (`PackageId`),
   KEY `characterid` (`characterid`) USING BTREE,
   KEY `accountid` (`accountid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hiredmerch
@@ -7916,7 +7977,7 @@ CREATE TABLE `hiredmerch` (
 -- ----------------------------
 -- Table structure for imps
 -- ----------------------------
-DROP TABLE IF EXISTS `imps`;
+
 CREATE TABLE `imps` (
   `impid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL DEFAULT '0',
@@ -7927,147 +7988,16 @@ CREATE TABLE `imps` (
   `fullness` mediumint(6) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`impid`),
   KEY `impid` (`impid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of imps
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for inventoryequipment
--- ----------------------------
-DROP TABLE IF EXISTS `inventoryequipment`;
-CREATE TABLE `inventoryequipment` (
-  `inventoryequipmentid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `inventoryitemid` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `upgradeslots` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `level` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `str` smallint(6) NOT NULL DEFAULT '0',
-  `dex` smallint(6) NOT NULL DEFAULT '0',
-  `int` smallint(6) NOT NULL DEFAULT '0',
-  `luk` smallint(6) NOT NULL DEFAULT '0',
-  `hp` smallint(6) NOT NULL DEFAULT '0',
-  `mp` smallint(6) NOT NULL DEFAULT '0',
-  `watk` smallint(6) NOT NULL DEFAULT '0',
-  `matk` smallint(6) NOT NULL DEFAULT '0',
-  `wdef` smallint(6) NOT NULL DEFAULT '0',
-  `mdef` smallint(6) NOT NULL DEFAULT '0',
-  `acc` smallint(6) NOT NULL DEFAULT '0',
-  `avoid` smallint(6) NOT NULL DEFAULT '0',
-  `hands` smallint(6) NOT NULL DEFAULT '0',
-  `speed` smallint(6) NOT NULL DEFAULT '0',
-  `jump` smallint(6) NOT NULL DEFAULT '0',
-  `ViciousHammer` tinyint(2) NOT NULL DEFAULT '0',
-  `itemEXP` int(11) NOT NULL DEFAULT '0',
-  `durability` mediumint(9) NOT NULL DEFAULT '-1',
-  `state` tinyint(3) NOT NULL,
-  `enhance` tinyint(3) NOT NULL DEFAULT '0',
-  `potential1` int(11) NOT NULL DEFAULT '0',
-  `potential2` int(11) NOT NULL DEFAULT '0',
-  `potential3` int(11) NOT NULL DEFAULT '0',
-  `potential4` int(11) NOT NULL DEFAULT '0',
-  `potential5` int(11) NOT NULL DEFAULT '0',
-  `potential6` int(11) NOT NULL DEFAULT '0',
-  `incSkill` int(11) NOT NULL DEFAULT '-1',
-  `charmEXP` smallint(6) NOT NULL DEFAULT '-1',
-  `pvpDamage` smallint(6) NOT NULL DEFAULT '0',
-  `statemsg` int(11) NOT NULL DEFAULT '0',
-  `itemSlot1` int(11) NOT NULL DEFAULT '-1',
-  `itemSlot2` int(11) NOT NULL DEFAULT '-1',
-  `itemSlot3` int(11) NOT NULL DEFAULT '-1',
-  `itemSkin` int(11) NOT NULL DEFAULT '0',
-  `limitBreak` int(11) NOT NULL DEFAULT '0',
-  `enhanctBuff` int(6) NOT NULL DEFAULT '0' COMMENT '强化效果 0x01 0x02 0x04',
-  `reqLevel` int(3) NOT NULL DEFAULT '0' COMMENT '穿戴装备的等级要求提高',
-  `yggdrasilWisdom` int(3) NOT NULL DEFAULT '0' COMMENT '什么卷轴效果',
-  `finalStrike` int(3) NOT NULL DEFAULT '0' COMMENT '最终一击卷轴成功',
-  `bossDamage` int(3) NOT NULL DEFAULT '0' COMMENT 'BOSS伤害百分比',
-  `ignorePDR` int(3) NOT NULL DEFAULT '0' COMMENT '无视怪物防御百分比',
-  `totalDamage` int(3) NOT NULL DEFAULT '0' COMMENT '总伤害百分比增加',
-  `allStat` int(3) NOT NULL DEFAULT '0' COMMENT '所有属性百分比增加',
-  `karmaCount` int(3) NOT NULL DEFAULT '-1' COMMENT '可以使用剪刀多少次',
-  PRIMARY KEY (`inventoryequipmentid`),
-  KEY `inventoryitemid` (`inventoryitemid`),
-  CONSTRAINT `inventoryequipment_ibfk_2` FOREIGN KEY (`inventoryitemid`) REFERENCES `inventoryitems` (`inventoryitemid`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10277 DEFAULT CHARSET=gbk ;
-
--- ----------------------------
--- Records of inventoryequipment
--- ----------------------------
-INSERT INTO `inventoryequipment` VALUES ('8975', '16617', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('8976', '16618', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('8977', '16619', '5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('8978', '16620', '7', '0', '0', '0', '0', '0', '0', '0', '17', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9403', '18038', '7', '0', '0', '0', '0', '0', '0', '0', '33', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9628', '18665', '7', '0', '0', '0', '0', '0', '0', '0', '19', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9629', '18666', '7', '0', '0', '0', '0', '0', '0', '0', '15', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9630', '18667', '7', '0', '0', '0', '0', '0', '0', '0', '18', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9631', '18668', '7', '0', '0', '0', '0', '0', '0', '6', '0', '0', '13', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9632', '18669', '7', '0', '0', '0', '0', '0', '0', '6', '0', '0', '14', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9633', '18670', '7', '0', '0', '0', '0', '0', '0', '0', '28', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9634', '18671', '7', '0', '0', '0', '0', '0', '0', '0', '34', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9635', '18672', '7', '0', '0', '0', '0', '0', '0', '0', '28', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9636', '18673', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9637', '18674', '7', '0', '0', '0', '0', '0', '0', '0', '31', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9638', '18675', '7', '0', '0', '0', '0', '0', '0', '0', '36', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9639', '18676', '7', '0', '0', '0', '0', '0', '0', '0', '11', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9640', '18677', '7', '0', '0', '0', '0', '0', '0', '0', '17', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9641', '18678', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9642', '18679', '7', '0', '0', '0', '0', '0', '0', '0', '17', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9643', '18680', '7', '0', '0', '0', '0', '0', '0', '0', '40', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9644', '18681', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '24', '6', '3', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9645', '18682', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9646', '18683', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '50', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9647', '18684', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '50', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9648', '18685', '7', '0', '0', '0', '0', '0', '0', '0', '35', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9649', '18704', '5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9650', '18705', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9651', '18706', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '50', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9652', '18707', '7', '0', '0', '0', '0', '0', '0', '0', '17', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9653', '18708', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9654', '18709', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('9655', '18710', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10127', '20654', '7', '0', '0', '0', '0', '0', '0', '0', '47', '66', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10128', '20655', '7', '0', '0', '0', '0', '0', '0', '0', '17', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10129', '20661', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10130', '20662', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10131', '20663', '5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10132', '20664', '7', '0', '0', '0', '0', '0', '0', '0', '58', '95', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10199', '20751', '7', '0', '0', '0', '0', '0', '0', '0', '19', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10200', '20752', '7', '0', '0', '0', '0', '0', '0', '0', '17', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10201', '20756', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10202', '20757', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10203', '20758', '5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10204', '20759', '7', '0', '0', '0', '0', '0', '0', '0', '17', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10253', '20870', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '37', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10254', '20871', '7', '0', '0', '0', '0', '0', '0', '0', '21', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10255', '20872', '7', '0', '0', '0', '0', '0', '0', '5', '0', '0', '15', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10256', '20873', '7', '0', '0', '0', '0', '0', '0', '0', '20', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10257', '20874', '6', '0', '3', '0', '0', '0', '0', '0', '36', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10258', '20875', '7', '0', '0', '0', '0', '0', '0', '0', '20', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10259', '20876', '7', '0', '0', '0', '0', '0', '0', '5', '0', '0', '15', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10260', '20877', '7', '0', '0', '0', '0', '0', '0', '0', '24', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10261', '20878', '7', '0', '0', '0', '0', '0', '0', '0', '21', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10262', '20879', '7', '0', '0', '0', '0', '0', '0', '0', '31', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10263', '20880', '7', '0', '0', '0', '0', '0', '0', '0', '21', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10264', '20881', '7', '0', '0', '0', '0', '0', '0', '0', '30', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10265', '20882', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '6', '5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10266', '20883', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '10', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10267', '20884', '7', '0', '0', '0', '0', '0', '0', '0', '31', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10268', '20885', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '11', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10269', '20886', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '8', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10270', '20887', '7', '0', '0', '0', '0', '0', '0', '0', '29', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10271', '20888', '7', '0', '0', '0', '0', '0', '0', '0', '61', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10272', '20889', '7', '0', '0', '0', '0', '0', '6', '0', '0', '0', '13', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10273', '20890', '7', '0', '0', '0', '0', '0', '0', '4', '0', '0', '16', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10274', '20891', '7', '0', '0', '0', '0', '0', '0', '0', '38', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10275', '20909', '5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-INSERT INTO `inventoryequipment` VALUES ('10276', '20910', '4', '2', '6', '0', '0', '0', '0', '0', '33', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
-
--- ----------------------------
 -- Table structure for inventoryitems
 -- ----------------------------
-DROP TABLE IF EXISTS `inventoryitems`;
+
 CREATE TABLE `inventoryitems` (
   `inventoryitemid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `type` tinyint(3) unsigned NOT NULL,
@@ -8089,7 +8019,7 @@ CREATE TABLE `inventoryitems` (
   KEY `FK_inventoryitems_2` (`accountid`),
   KEY `FK_inventoryitems_3` (`uniqueid`) USING BTREE,
   KEY `FK_inventoryitems_4` (`equipOnlyId`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=20925 DEFAULT CHARSET=gbk ;
+) ENGINE=InnoDB AUTO_INCREMENT=20925 DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Records of inventoryitems
@@ -8223,17 +8153,149 @@ INSERT INTO `inventoryitems` VALUES ('20922', '2', null, '1', '4051000', '4', '1
 INSERT INTO `inventoryitems` VALUES ('20923', '2', null, '1', '4060000', '4', '11', '1', '', '商城购买 50200001 时间 2015-08-31', '18', '0', '1441637106812', '', '-1');
 INSERT INTO `inventoryitems` VALUES ('20924', '2', null, '1', '4051002', '4', '12', '1', '', '商城购买 50000002 时间 2015-08-31', '19', '0', '-1', '', '-1');
 
+
+-- ----------------------------
+-- Table structure for inventoryequipment
+-- ----------------------------
+
+CREATE TABLE `inventoryequipment` (
+  `inventoryequipmentid` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `inventoryitemid` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `upgradeslots` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `level` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `str` smallint(6) NOT NULL DEFAULT '0',
+  `dex` smallint(6) NOT NULL DEFAULT '0',
+  `int` smallint(6) NOT NULL DEFAULT '0',
+  `luk` smallint(6) NOT NULL DEFAULT '0',
+  `hp` smallint(6) NOT NULL DEFAULT '0',
+  `mp` smallint(6) NOT NULL DEFAULT '0',
+  `watk` smallint(6) NOT NULL DEFAULT '0',
+  `matk` smallint(6) NOT NULL DEFAULT '0',
+  `wdef` smallint(6) NOT NULL DEFAULT '0',
+  `mdef` smallint(6) NOT NULL DEFAULT '0',
+  `acc` smallint(6) NOT NULL DEFAULT '0',
+  `avoid` smallint(6) NOT NULL DEFAULT '0',
+  `hands` smallint(6) NOT NULL DEFAULT '0',
+  `speed` smallint(6) NOT NULL DEFAULT '0',
+  `jump` smallint(6) NOT NULL DEFAULT '0',
+  `ViciousHammer` tinyint(2) NOT NULL DEFAULT '0',
+  `itemEXP` int(11) NOT NULL DEFAULT '0',
+  `durability` mediumint(9) NOT NULL DEFAULT '-1',
+  `state` tinyint(3) NOT NULL,
+  `enhance` tinyint(3) NOT NULL DEFAULT '0',
+  `potential1` int(11) NOT NULL DEFAULT '0',
+  `potential2` int(11) NOT NULL DEFAULT '0',
+  `potential3` int(11) NOT NULL DEFAULT '0',
+  `potential4` int(11) NOT NULL DEFAULT '0',
+  `potential5` int(11) NOT NULL DEFAULT '0',
+  `potential6` int(11) NOT NULL DEFAULT '0',
+  `incSkill` int(11) NOT NULL DEFAULT '-1',
+  `charmEXP` smallint(6) NOT NULL DEFAULT '-1',
+  `pvpDamage` smallint(6) NOT NULL DEFAULT '0',
+  `statemsg` int(11) NOT NULL DEFAULT '0',
+  `itemSlot1` int(11) NOT NULL DEFAULT '-1',
+  `itemSlot2` int(11) NOT NULL DEFAULT '-1',
+  `itemSlot3` int(11) NOT NULL DEFAULT '-1',
+  `itemSkin` int(11) NOT NULL DEFAULT '0',
+  `limitBreak` int(11) NOT NULL DEFAULT '0',
+  `enhanctBuff` int(6) NOT NULL DEFAULT '0' COMMENT '强化效果 0x01 0x02 0x04',
+  `reqLevel` int(3) NOT NULL DEFAULT '0' COMMENT '穿戴装备的等级要求提高',
+  `yggdrasilWisdom` int(3) NOT NULL DEFAULT '0' COMMENT '什么卷轴效果',
+  `finalStrike` int(3) NOT NULL DEFAULT '0' COMMENT '最终一击卷轴成功',
+  `bossDamage` int(3) NOT NULL DEFAULT '0' COMMENT 'BOSS伤害百分比',
+  `ignorePDR` int(3) NOT NULL DEFAULT '0' COMMENT '无视怪物防御百分比',
+  `totalDamage` int(3) NOT NULL DEFAULT '0' COMMENT '总伤害百分比增加',
+  `allStat` int(3) NOT NULL DEFAULT '0' COMMENT '所有属性百分比增加',
+  `karmaCount` int(3) NOT NULL DEFAULT '-1' COMMENT '可以使用剪刀多少次',
+  PRIMARY KEY (`inventoryequipmentid`),
+  KEY `inventoryitemid` (`inventoryitemid`),
+  CONSTRAINT `inventoryequipment_ibfk_2` FOREIGN KEY (`inventoryitemid`) REFERENCES `inventoryitems` (`inventoryitemid`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=10277 DEFAULT CHARSET=utf8 ;
+
+-- ----------------------------
+-- Records of inventoryequipment
+-- ----------------------------
+INSERT INTO `inventoryequipment` VALUES ('8975', '16617', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('8976', '16618', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('8977', '16619', '5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('8978', '16620', '7', '0', '0', '0', '0', '0', '0', '0', '17', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9403', '18038', '7', '0', '0', '0', '0', '0', '0', '0', '33', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9628', '18665', '7', '0', '0', '0', '0', '0', '0', '0', '19', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9629', '18666', '7', '0', '0', '0', '0', '0', '0', '0', '15', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9630', '18667', '7', '0', '0', '0', '0', '0', '0', '0', '18', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9631', '18668', '7', '0', '0', '0', '0', '0', '0', '6', '0', '0', '13', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9632', '18669', '7', '0', '0', '0', '0', '0', '0', '6', '0', '0', '14', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9633', '18670', '7', '0', '0', '0', '0', '0', '0', '0', '28', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9634', '18671', '7', '0', '0', '0', '0', '0', '0', '0', '34', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9635', '18672', '7', '0', '0', '0', '0', '0', '0', '0', '28', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9636', '18673', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9637', '18674', '7', '0', '0', '0', '0', '0', '0', '0', '31', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9638', '18675', '7', '0', '0', '0', '0', '0', '0', '0', '36', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9639', '18676', '7', '0', '0', '0', '0', '0', '0', '0', '11', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9640', '18677', '7', '0', '0', '0', '0', '0', '0', '0', '17', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9641', '18678', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9642', '18679', '7', '0', '0', '0', '0', '0', '0', '0', '17', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9643', '18680', '7', '0', '0', '0', '0', '0', '0', '0', '40', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9644', '18681', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '24', '6', '3', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9645', '18682', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9646', '18683', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '50', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9647', '18684', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '50', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9648', '18685', '7', '0', '0', '0', '0', '0', '0', '0', '35', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9649', '18704', '5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9650', '18705', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9651', '18706', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '50', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9652', '18707', '7', '0', '0', '0', '0', '0', '0', '0', '17', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9653', '18708', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9654', '18709', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('9655', '18710', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10127', '20654', '7', '0', '0', '0', '0', '0', '0', '0', '47', '66', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10128', '20655', '7', '0', '0', '0', '0', '0', '0', '0', '17', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10129', '20661', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10130', '20662', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10131', '20663', '5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10132', '20664', '7', '0', '0', '0', '0', '0', '0', '0', '58', '95', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10199', '20751', '7', '0', '0', '0', '0', '0', '0', '0', '19', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10200', '20752', '7', '0', '0', '0', '0', '0', '0', '0', '17', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10201', '20756', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10202', '20757', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10203', '20758', '5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10204', '20759', '7', '0', '0', '0', '0', '0', '0', '0', '17', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10253', '20870', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '37', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10254', '20871', '7', '0', '0', '0', '0', '0', '0', '0', '21', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10255', '20872', '7', '0', '0', '0', '0', '0', '0', '5', '0', '0', '15', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10256', '20873', '7', '0', '0', '0', '0', '0', '0', '0', '20', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10257', '20874', '6', '0', '3', '0', '0', '0', '0', '0', '36', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10258', '20875', '7', '0', '0', '0', '0', '0', '0', '0', '20', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10259', '20876', '7', '0', '0', '0', '0', '0', '0', '5', '0', '0', '15', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10260', '20877', '7', '0', '0', '0', '0', '0', '0', '0', '24', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10261', '20878', '7', '0', '0', '0', '0', '0', '0', '0', '21', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10262', '20879', '7', '0', '0', '0', '0', '0', '0', '0', '31', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10263', '20880', '7', '0', '0', '0', '0', '0', '0', '0', '21', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10264', '20881', '7', '0', '0', '0', '0', '0', '0', '0', '30', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10265', '20882', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '6', '5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10266', '20883', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '10', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10267', '20884', '7', '0', '0', '0', '0', '0', '0', '0', '31', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10268', '20885', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '11', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10269', '20886', '7', '0', '0', '0', '0', '0', '0', '0', '0', '0', '8', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10270', '20887', '7', '0', '0', '0', '0', '0', '0', '0', '29', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10271', '20888', '7', '0', '0', '0', '0', '0', '0', '0', '61', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10272', '20889', '7', '0', '0', '0', '0', '0', '6', '0', '0', '0', '13', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10273', '20890', '7', '0', '0', '0', '0', '0', '0', '4', '0', '0', '16', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10274', '20891', '7', '0', '0', '0', '0', '0', '0', '0', '38', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10275', '20909', '5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+INSERT INTO `inventoryequipment` VALUES ('10276', '20910', '4', '2', '6', '0', '0', '0', '0', '0', '33', '0', '2', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '-1');
+
 -- ----------------------------
 -- Table structure for inventorylog
 -- ----------------------------
-DROP TABLE IF EXISTS `inventorylog`;
+
 CREATE TABLE `inventorylog` (
   `inventorylogid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `inventoryitemid` int(10) unsigned NOT NULL DEFAULT '0',
   `msg` tinytext NOT NULL,
   PRIMARY KEY (`inventorylogid`),
   KEY `inventoryitemid` (`inventoryitemid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of inventorylog
@@ -8242,7 +8304,7 @@ CREATE TABLE `inventorylog` (
 -- ----------------------------
 -- Table structure for inventoryslot
 -- ----------------------------
-DROP TABLE IF EXISTS `inventoryslot`;
+
 CREATE TABLE `inventoryslot` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(10) unsigned DEFAULT NULL,
@@ -8255,7 +8317,7 @@ CREATE TABLE `inventoryslot` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `characterid` (`characterid`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1325 DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=1325 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of inventoryslot
@@ -8269,7 +8331,7 @@ INSERT INTO `inventoryslot` VALUES ('1324', '5', '32', '32', '32', '32', '60', n
 -- ----------------------------
 -- Table structure for itemsearch
 -- ----------------------------
-DROP TABLE IF EXISTS `itemsearch`;
+
 CREATE TABLE `itemsearch` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `itemid` int(11) NOT NULL DEFAULT '0',
@@ -8278,7 +8340,7 @@ CREATE TABLE `itemsearch` (
   PRIMARY KEY (`id`),
   KEY `itemid` (`itemid`) USING BTREE,
   KEY `count` (`count`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of itemsearch
@@ -8287,7 +8349,7 @@ CREATE TABLE `itemsearch` (
 -- ----------------------------
 -- Table structure for keymap
 -- ----------------------------
-DROP TABLE IF EXISTS `keymap`;
+
 CREATE TABLE `keymap` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL DEFAULT '0',
@@ -8297,57 +8359,11 @@ CREATE TABLE `keymap` (
   PRIMARY KEY (`id`),
   KEY `keymap_ibfk_1` (`characterid`),
   CONSTRAINT `keymap_ibfk_1` FOREIGN KEY (`characterid`) REFERENCES `characters` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9339 DEFAULT CHARSET=gbk ;
+) ENGINE=InnoDB AUTO_INCREMENT=9339 DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Records of keymap
 -- ----------------------------
-INSERT INTO `keymap` VALUES ('8971', '5', '2', '4', '10');
-INSERT INTO `keymap` VALUES ('8972', '5', '3', '4', '12');
-INSERT INTO `keymap` VALUES ('8973', '5', '4', '4', '13');
-INSERT INTO `keymap` VALUES ('8974', '5', '64', '6', '105');
-INSERT INTO `keymap` VALUES ('8975', '5', '5', '4', '18');
-INSERT INTO `keymap` VALUES ('8976', '5', '65', '6', '106');
-INSERT INTO `keymap` VALUES ('8977', '5', '6', '4', '23');
-INSERT INTO `keymap` VALUES ('8978', '5', '7', '4', '28');
-INSERT INTO `keymap` VALUES ('8979', '5', '17', '4', '5');
-INSERT INTO `keymap` VALUES ('8980', '5', '16', '4', '8');
-INSERT INTO `keymap` VALUES ('8981', '5', '19', '4', '4');
-INSERT INTO `keymap` VALUES ('8982', '5', '18', '4', '0');
-INSERT INTO `keymap` VALUES ('8983', '5', '21', '4', '30');
-INSERT INTO `keymap` VALUES ('8984', '5', '20', '4', '27');
-INSERT INTO `keymap` VALUES ('8985', '5', '23', '4', '1');
-INSERT INTO `keymap` VALUES ('8986', '5', '22', '4', '32');
-INSERT INTO `keymap` VALUES ('8987', '5', '25', '4', '19');
-INSERT INTO `keymap` VALUES ('8988', '5', '24', '4', '24');
-INSERT INTO `keymap` VALUES ('8989', '5', '27', '4', '15');
-INSERT INTO `keymap` VALUES ('8990', '5', '26', '4', '14');
-INSERT INTO `keymap` VALUES ('8991', '5', '29', '5', '52');
-INSERT INTO `keymap` VALUES ('8992', '5', '31', '4', '2');
-INSERT INTO `keymap` VALUES ('8993', '5', '34', '4', '17');
-INSERT INTO `keymap` VALUES ('8994', '5', '35', '4', '11');
-INSERT INTO `keymap` VALUES ('8995', '5', '33', '4', '25');
-INSERT INTO `keymap` VALUES ('8996', '5', '38', '4', '20');
-INSERT INTO `keymap` VALUES ('8997', '5', '39', '4', '26');
-INSERT INTO `keymap` VALUES ('8998', '5', '37', '4', '3');
-INSERT INTO `keymap` VALUES ('8999', '5', '43', '4', '9');
-INSERT INTO `keymap` VALUES ('9000', '5', '40', '4', '16');
-INSERT INTO `keymap` VALUES ('9001', '5', '41', '4', '22');
-INSERT INTO `keymap` VALUES ('9002', '5', '46', '4', '6');
-INSERT INTO `keymap` VALUES ('9003', '5', '47', '4', '31');
-INSERT INTO `keymap` VALUES ('9004', '5', '44', '5', '50');
-INSERT INTO `keymap` VALUES ('9005', '5', '45', '5', '51');
-INSERT INTO `keymap` VALUES ('9006', '5', '51', '4', '33');
-INSERT INTO `keymap` VALUES ('9007', '5', '50', '4', '7');
-INSERT INTO `keymap` VALUES ('9008', '5', '48', '4', '29');
-INSERT INTO `keymap` VALUES ('9009', '5', '52', '4', '35');
-INSERT INTO `keymap` VALUES ('9010', '5', '59', '6', '100');
-INSERT INTO `keymap` VALUES ('9011', '5', '57', '5', '54');
-INSERT INTO `keymap` VALUES ('9012', '5', '56', '5', '53');
-INSERT INTO `keymap` VALUES ('9013', '5', '63', '6', '104');
-INSERT INTO `keymap` VALUES ('9014', '5', '62', '6', '103');
-INSERT INTO `keymap` VALUES ('9015', '5', '61', '6', '102');
-INSERT INTO `keymap` VALUES ('9016', '5', '60', '6', '101');
 INSERT INTO `keymap` VALUES ('9063', '4', '2', '4', '10');
 INSERT INTO `keymap` VALUES ('9064', '4', '3', '4', '12');
 INSERT INTO `keymap` VALUES ('9065', '4', '64', '6', '105');
@@ -8394,103 +8410,11 @@ INSERT INTO `keymap` VALUES ('9105', '4', '63', '6', '104');
 INSERT INTO `keymap` VALUES ('9106', '4', '62', '6', '103');
 INSERT INTO `keymap` VALUES ('9107', '4', '61', '6', '102');
 INSERT INTO `keymap` VALUES ('9108', '4', '60', '6', '101');
-INSERT INTO `keymap` VALUES ('9155', '7', '2', '4', '10');
-INSERT INTO `keymap` VALUES ('9156', '7', '3', '4', '12');
-INSERT INTO `keymap` VALUES ('9157', '7', '4', '4', '13');
-INSERT INTO `keymap` VALUES ('9158', '7', '5', '4', '18');
-INSERT INTO `keymap` VALUES ('9159', '7', '6', '4', '23');
-INSERT INTO `keymap` VALUES ('9160', '7', '7', '4', '28');
-INSERT INTO `keymap` VALUES ('9161', '7', '16', '4', '8');
-INSERT INTO `keymap` VALUES ('9162', '7', '17', '4', '5');
-INSERT INTO `keymap` VALUES ('9163', '7', '18', '4', '0');
-INSERT INTO `keymap` VALUES ('9164', '7', '19', '4', '4');
-INSERT INTO `keymap` VALUES ('9165', '7', '20', '4', '27');
-INSERT INTO `keymap` VALUES ('9166', '7', '21', '4', '30');
-INSERT INTO `keymap` VALUES ('9167', '7', '22', '4', '32');
-INSERT INTO `keymap` VALUES ('9168', '7', '23', '4', '1');
-INSERT INTO `keymap` VALUES ('9169', '7', '24', '4', '24');
-INSERT INTO `keymap` VALUES ('9170', '7', '25', '4', '19');
-INSERT INTO `keymap` VALUES ('9171', '7', '26', '4', '14');
-INSERT INTO `keymap` VALUES ('9172', '7', '27', '4', '15');
-INSERT INTO `keymap` VALUES ('9173', '7', '29', '5', '52');
-INSERT INTO `keymap` VALUES ('9174', '7', '31', '4', '2');
-INSERT INTO `keymap` VALUES ('9175', '7', '33', '4', '25');
-INSERT INTO `keymap` VALUES ('9176', '7', '34', '4', '17');
-INSERT INTO `keymap` VALUES ('9177', '7', '35', '4', '11');
-INSERT INTO `keymap` VALUES ('9178', '7', '37', '4', '3');
-INSERT INTO `keymap` VALUES ('9179', '7', '38', '4', '20');
-INSERT INTO `keymap` VALUES ('9180', '7', '39', '4', '26');
-INSERT INTO `keymap` VALUES ('9181', '7', '40', '4', '16');
-INSERT INTO `keymap` VALUES ('9182', '7', '41', '4', '22');
-INSERT INTO `keymap` VALUES ('9183', '7', '43', '4', '9');
-INSERT INTO `keymap` VALUES ('9184', '7', '44', '5', '50');
-INSERT INTO `keymap` VALUES ('9185', '7', '45', '5', '51');
-INSERT INTO `keymap` VALUES ('9186', '7', '46', '4', '6');
-INSERT INTO `keymap` VALUES ('9187', '7', '47', '4', '31');
-INSERT INTO `keymap` VALUES ('9188', '7', '48', '4', '29');
-INSERT INTO `keymap` VALUES ('9189', '7', '50', '4', '7');
-INSERT INTO `keymap` VALUES ('9190', '7', '51', '4', '33');
-INSERT INTO `keymap` VALUES ('9191', '7', '52', '4', '35');
-INSERT INTO `keymap` VALUES ('9192', '7', '56', '5', '53');
-INSERT INTO `keymap` VALUES ('9193', '7', '57', '5', '54');
-INSERT INTO `keymap` VALUES ('9194', '7', '59', '6', '100');
-INSERT INTO `keymap` VALUES ('9195', '7', '60', '6', '101');
-INSERT INTO `keymap` VALUES ('9196', '7', '61', '6', '102');
-INSERT INTO `keymap` VALUES ('9197', '7', '62', '6', '103');
-INSERT INTO `keymap` VALUES ('9198', '7', '63', '6', '104');
-INSERT INTO `keymap` VALUES ('9199', '7', '64', '6', '105');
-INSERT INTO `keymap` VALUES ('9200', '7', '65', '6', '106');
-INSERT INTO `keymap` VALUES ('9293', '8', '2', '4', '10');
-INSERT INTO `keymap` VALUES ('9294', '8', '3', '4', '12');
-INSERT INTO `keymap` VALUES ('9295', '8', '64', '6', '105');
-INSERT INTO `keymap` VALUES ('9296', '8', '4', '4', '13');
-INSERT INTO `keymap` VALUES ('9297', '8', '65', '6', '106');
-INSERT INTO `keymap` VALUES ('9298', '8', '5', '4', '18');
-INSERT INTO `keymap` VALUES ('9299', '8', '6', '4', '23');
-INSERT INTO `keymap` VALUES ('9300', '8', '7', '4', '28');
-INSERT INTO `keymap` VALUES ('9301', '8', '17', '4', '5');
-INSERT INTO `keymap` VALUES ('9302', '8', '16', '4', '8');
-INSERT INTO `keymap` VALUES ('9303', '8', '19', '4', '4');
-INSERT INTO `keymap` VALUES ('9304', '8', '18', '4', '0');
-INSERT INTO `keymap` VALUES ('9305', '8', '21', '4', '30');
-INSERT INTO `keymap` VALUES ('9306', '8', '20', '4', '27');
-INSERT INTO `keymap` VALUES ('9307', '8', '23', '4', '1');
-INSERT INTO `keymap` VALUES ('9308', '8', '22', '4', '32');
-INSERT INTO `keymap` VALUES ('9309', '8', '25', '4', '19');
-INSERT INTO `keymap` VALUES ('9310', '8', '24', '4', '24');
-INSERT INTO `keymap` VALUES ('9311', '8', '27', '4', '15');
-INSERT INTO `keymap` VALUES ('9312', '8', '26', '4', '14');
-INSERT INTO `keymap` VALUES ('9313', '8', '29', '5', '52');
-INSERT INTO `keymap` VALUES ('9314', '8', '31', '4', '2');
-INSERT INTO `keymap` VALUES ('9315', '8', '34', '4', '17');
-INSERT INTO `keymap` VALUES ('9316', '8', '35', '4', '11');
-INSERT INTO `keymap` VALUES ('9317', '8', '33', '4', '25');
-INSERT INTO `keymap` VALUES ('9318', '8', '38', '4', '20');
-INSERT INTO `keymap` VALUES ('9319', '8', '39', '4', '26');
-INSERT INTO `keymap` VALUES ('9320', '8', '37', '4', '3');
-INSERT INTO `keymap` VALUES ('9321', '8', '43', '4', '9');
-INSERT INTO `keymap` VALUES ('9322', '8', '40', '4', '16');
-INSERT INTO `keymap` VALUES ('9323', '8', '41', '4', '22');
-INSERT INTO `keymap` VALUES ('9324', '8', '46', '4', '6');
-INSERT INTO `keymap` VALUES ('9325', '8', '47', '4', '31');
-INSERT INTO `keymap` VALUES ('9326', '8', '44', '5', '50');
-INSERT INTO `keymap` VALUES ('9327', '8', '45', '5', '51');
-INSERT INTO `keymap` VALUES ('9328', '8', '51', '4', '33');
-INSERT INTO `keymap` VALUES ('9329', '8', '50', '4', '7');
-INSERT INTO `keymap` VALUES ('9330', '8', '48', '4', '29');
-INSERT INTO `keymap` VALUES ('9331', '8', '52', '4', '35');
-INSERT INTO `keymap` VALUES ('9332', '8', '59', '6', '100');
-INSERT INTO `keymap` VALUES ('9333', '8', '57', '5', '54');
-INSERT INTO `keymap` VALUES ('9334', '8', '56', '5', '53');
-INSERT INTO `keymap` VALUES ('9335', '8', '63', '6', '104');
-INSERT INTO `keymap` VALUES ('9336', '8', '62', '6', '103');
-INSERT INTO `keymap` VALUES ('9337', '8', '61', '6', '102');
-INSERT INTO `keymap` VALUES ('9338', '8', '60', '6', '101');
 
 -- ----------------------------
 -- Table structure for mountdata
 -- ----------------------------
-DROP TABLE IF EXISTS `mountdata`;
+
 CREATE TABLE `mountdata` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(10) unsigned DEFAULT NULL,
@@ -8500,7 +8424,7 @@ CREATE TABLE `mountdata` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `characterid` (`characterid`),
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mountdata
@@ -8514,7 +8438,7 @@ INSERT INTO `mountdata` VALUES ('8', '8', '1', '0', '0');
 -- ----------------------------
 -- Table structure for notes
 -- ----------------------------
-DROP TABLE IF EXISTS `notes`;
+
 CREATE TABLE `notes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `to` varchar(13) NOT NULL DEFAULT '',
@@ -8524,7 +8448,7 @@ CREATE TABLE `notes` (
   `gift` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `to` (`to`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of notes
@@ -8533,7 +8457,7 @@ CREATE TABLE `notes` (
 -- ----------------------------
 -- Table structure for nxcode
 -- ----------------------------
-DROP TABLE IF EXISTS `nxcode`;
+
 CREATE TABLE `nxcode` (
   `code` varchar(30) NOT NULL,
   `valid` int(11) NOT NULL DEFAULT '1',
@@ -8542,7 +8466,7 @@ CREATE TABLE `nxcode` (
   `user` varchar(13) DEFAULT NULL,
   `time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`code`)
-) ENGINE=MyISAM DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of nxcode
@@ -8551,7 +8475,7 @@ CREATE TABLE `nxcode` (
 -- ----------------------------
 -- Table structure for pets
 -- ----------------------------
-DROP TABLE IF EXISTS `pets`;
+
 CREATE TABLE `pets` (
   `petid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(13) DEFAULT NULL,
@@ -8564,7 +8488,7 @@ CREATE TABLE `pets` (
   `excluded` varchar(255) NOT NULL DEFAULT '0,0,0,0,0,0,0,0,0,0',
   PRIMARY KEY (`petid`),
   KEY `petid` (`petid`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of pets
@@ -8575,7 +8499,7 @@ INSERT INTO `pets` VALUES ('31', '熊猫', '1', '0', '100', '0', '0', '0', '0,0,
 -- ----------------------------
 -- Table structure for playernpcs
 -- ----------------------------
-DROP TABLE IF EXISTS `playernpcs`;
+
 CREATE TABLE `playernpcs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(13) NOT NULL,
@@ -8595,7 +8519,7 @@ CREATE TABLE `playernpcs` (
   KEY `scriptid` (`scriptid`),
   KEY `playernpcs_ibfk_1` (`charid`),
   CONSTRAINT `playernpcs_ibfk_1` FOREIGN KEY (`charid`) REFERENCES `characters` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of playernpcs
@@ -8604,7 +8528,7 @@ CREATE TABLE `playernpcs` (
 -- ----------------------------
 -- Table structure for playernpcs_equip
 -- ----------------------------
-DROP TABLE IF EXISTS `playernpcs_equip`;
+
 CREATE TABLE `playernpcs_equip` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `npcid` int(11) NOT NULL,
@@ -8616,7 +8540,7 @@ CREATE TABLE `playernpcs_equip` (
   KEY `playernpcs_equip_ibfk_2` (`npcid`),
   CONSTRAINT `playernpcs_equip_ibfk_1` FOREIGN KEY (`charid`) REFERENCES `characters` (`id`) ON DELETE CASCADE,
   CONSTRAINT `playernpcs_equip_ibfk_2` FOREIGN KEY (`npcid`) REFERENCES `playernpcs` (`scriptid`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of playernpcs_equip
@@ -8625,7 +8549,7 @@ CREATE TABLE `playernpcs_equip` (
 -- ----------------------------
 -- Table structure for pokemon
 -- ----------------------------
-DROP TABLE IF EXISTS `pokemon`;
+
 CREATE TABLE `pokemon` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `monsterid` int(11) NOT NULL DEFAULT '0',
@@ -8650,7 +8574,7 @@ CREATE TABLE `pokemon` (
   PRIMARY KEY (`id`),
   KEY `id` (`id`),
   KEY `characterid` (`characterid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of pokemon
@@ -8659,16 +8583,16 @@ CREATE TABLE `pokemon` (
 -- ----------------------------
 -- Table structure for pqlog
 -- ----------------------------
-DROP TABLE IF EXISTS `pqlog`;
+
 CREATE TABLE `pqlog` (
   `pqid` int(10) NOT NULL AUTO_INCREMENT,
   `characterid` int(10) NOT NULL,
-  `pqname` varchar(20) CHARACTER SET gbk NOT NULL DEFAULT '',
+  `pqname` varchar(20) CHARACTER SET utf8 NOT NULL DEFAULT '',
   `count` int(10) NOT NULL,
   `type` int(10) NOT NULL,
   `time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`pqid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gb2312;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pqlog
@@ -8677,7 +8601,7 @@ CREATE TABLE `pqlog` (
 -- ----------------------------
 -- Table structure for questinfo
 -- ----------------------------
-DROP TABLE IF EXISTS `questinfo`;
+
 CREATE TABLE `questinfo` (
   `questinfoid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL DEFAULT '0',
@@ -8686,7 +8610,7 @@ CREATE TABLE `questinfo` (
   PRIMARY KEY (`questinfoid`),
   KEY `characterid` (`characterid`),
   CONSTRAINT `questsinfo_ibfk_1` FOREIGN KEY (`characterid`) REFERENCES `characters` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Records of questinfo
@@ -8695,7 +8619,7 @@ CREATE TABLE `questinfo` (
 -- ----------------------------
 -- Table structure for queststatus
 -- ----------------------------
-DROP TABLE IF EXISTS `queststatus`;
+
 CREATE TABLE `queststatus` (
   `queststatusid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL DEFAULT '0',
@@ -8708,26 +8632,21 @@ CREATE TABLE `queststatus` (
   KEY `characterid` (`characterid`),
   KEY `queststatusid` (`queststatusid`),
   CONSTRAINT `queststatus_ibfk_1` FOREIGN KEY (`characterid`) REFERENCES `characters` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3004 DEFAULT CHARSET=gbk ;
+) ENGINE=InnoDB AUTO_INCREMENT=3004 DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Records of queststatus
 -- ----------------------------
-INSERT INTO `queststatus` VALUES ('2982', '8', '100100', '2', '1447997305', '0', '');
-INSERT INTO `queststatus` VALUES ('2983', '8', '100101', '2', '1447997765', '0', '');
-INSERT INTO `queststatus` VALUES ('2984', '8', '100102', '2', '1450242917', '0', '');
-INSERT INTO `queststatus` VALUES ('2989', '7', '100100', '2', '1452058289', '0', '');
-INSERT INTO `queststatus` VALUES ('2990', '7', '100101', '1', '1452058379', '0', '');
-INSERT INTO `queststatus` VALUES ('2999', '5', '100', '1', '1449726944', '0', 'f');
-INSERT INTO `queststatus` VALUES ('3000', '5', '1000100', '1', '1449726944', '0', 'w');
-INSERT INTO `queststatus` VALUES ('3001', '5', '1001100', '1', '1449726944', '0', 's');
-INSERT INTO `queststatus` VALUES ('3002', '5', '1002000', '1', '1449726944', '0', 's');
-INSERT INTO `queststatus` VALUES ('3003', '5', '1001504', '1', '1452184566', '0', '');
+INSERT INTO `queststatus` VALUES ('2999', '4', '100', '1', '1449726944', '0', 'f');
+INSERT INTO `queststatus` VALUES ('3000', '4', '1000100', '1', '1449726944', '0', 'w');
+INSERT INTO `queststatus` VALUES ('3001', '4', '1001100', '1', '1449726944', '0', 's');
+INSERT INTO `queststatus` VALUES ('3002', '4', '1002000', '1', '1449726944', '0', 's');
+INSERT INTO `queststatus` VALUES ('3003', '4', '1001504', '1', '1452184566', '0', '');
 
 -- ----------------------------
 -- Table structure for quickslot
 -- ----------------------------
-DROP TABLE IF EXISTS `quickslot`;
+
 CREATE TABLE `quickslot` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL DEFAULT '0',
@@ -8736,7 +8655,7 @@ CREATE TABLE `quickslot` (
   PRIMARY KEY (`id`),
   KEY `quickslot_ibfk_1` (`characterid`),
   CONSTRAINT `quickslot_ibfk_1` FOREIGN KEY (`characterid`) REFERENCES `characters` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Records of quickslot
@@ -8745,7 +8664,7 @@ CREATE TABLE `quickslot` (
 -- ----------------------------
 -- Table structure for reactordrops
 -- ----------------------------
-DROP TABLE IF EXISTS `reactordrops`;
+
 CREATE TABLE `reactordrops` (
   `reactordropid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `reactorid` int(11) NOT NULL,
@@ -8754,7 +8673,7 @@ CREATE TABLE `reactordrops` (
   `questid` int(5) NOT NULL DEFAULT '-1',
   PRIMARY KEY (`reactordropid`),
   KEY `reactorid` (`reactorid`)
-) ENGINE=MyISAM DEFAULT CHARSET=gbk PACK_KEYS=1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 PACK_KEYS=1;
 
 -- ----------------------------
 -- Records of reactordrops
@@ -8763,7 +8682,7 @@ CREATE TABLE `reactordrops` (
 -- ----------------------------
 -- Table structure for reports
 -- ----------------------------
-DROP TABLE IF EXISTS `reports`;
+
 CREATE TABLE `reports` (
   `reportid` int(9) NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL DEFAULT '0',
@@ -8771,7 +8690,7 @@ CREATE TABLE `reports` (
   `count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`reportid`,`characterid`),
   KEY `characterid` (`characterid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of reports
@@ -8780,7 +8699,7 @@ CREATE TABLE `reports` (
 -- ----------------------------
 -- Table structure for rings
 -- ----------------------------
-DROP TABLE IF EXISTS `rings`;
+
 CREATE TABLE `rings` (
   `ringid` int(11) NOT NULL AUTO_INCREMENT,
   `partnerRingId` int(11) NOT NULL DEFAULT '0',
@@ -8791,7 +8710,7 @@ CREATE TABLE `rings` (
   KEY `ringid` (`ringid`),
   KEY `partnerChrId` (`partnerChrId`),
   KEY `partnerRingId` (`partnerRingId`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Records of rings
@@ -8800,7 +8719,7 @@ CREATE TABLE `rings` (
 -- ----------------------------
 -- Table structure for savedlocations
 -- ----------------------------
-DROP TABLE IF EXISTS `savedlocations`;
+
 CREATE TABLE `savedlocations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL,
@@ -8809,7 +8728,7 @@ CREATE TABLE `savedlocations` (
   PRIMARY KEY (`id`),
   KEY `savedlocations_ibfk_1` (`characterid`),
   CONSTRAINT `savedlocations_ibfk_1` FOREIGN KEY (`characterid`) REFERENCES `characters` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of savedlocations
@@ -8818,7 +8737,7 @@ CREATE TABLE `savedlocations` (
 -- ----------------------------
 -- Table structure for scroll_log
 -- ----------------------------
-DROP TABLE IF EXISTS `scroll_log`;
+
 CREATE TABLE `scroll_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `accId` int(11) NOT NULL DEFAULT '0',
@@ -8833,7 +8752,7 @@ CREATE TABLE `scroll_log` (
   `legendarySpirit` tinyint(1) NOT NULL DEFAULT '0',
   `vegaId` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of scroll_log
@@ -8842,13 +8761,13 @@ CREATE TABLE `scroll_log` (
 -- ----------------------------
 -- Table structure for shares
 -- ----------------------------
-DROP TABLE IF EXISTS `shares`;
+
 CREATE TABLE `shares` (
   `channelid` int(11) NOT NULL AUTO_INCREMENT,
   `currentprice` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`channelid`),
   KEY `channelid` (`channelid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of shares
@@ -8857,7 +8776,7 @@ CREATE TABLE `shares` (
 -- ----------------------------
 -- Table structure for shopitems
 -- ----------------------------
-DROP TABLE IF EXISTS `shopitems`;
+
 CREATE TABLE `shopitems` (
   `shopitemid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `shopid` int(10) unsigned NOT NULL DEFAULT '0',
@@ -8871,7 +8790,7 @@ CREATE TABLE `shopitems` (
   `rank` tinyint(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`shopitemid`),
   KEY `shopid` (`shopid`)
-) ENGINE=MyISAM AUTO_INCREMENT=1002085 DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM AUTO_INCREMENT=1002085 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of shopitems
@@ -8885,13 +8804,13 @@ INSERT INTO `shopitems` VALUES ('1002084', '2', '2040011', '1', '4', '0', '0', '
 -- ----------------------------
 -- Table structure for shops
 -- ----------------------------
-DROP TABLE IF EXISTS `shops`;
+
 CREATE TABLE `shops` (
   `shopid` int(10) unsigned NOT NULL,
   `npcid` int(11) DEFAULT '0',
   `shopname` text,
   PRIMARY KEY (`shopid`)
-) ENGINE=MyISAM DEFAULT CHARSET=gbk ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Records of shops
@@ -8902,13 +8821,13 @@ INSERT INTO `shops` VALUES ('2', '11100', '彩虹村杂货店');
 -- ----------------------------
 -- Table structure for sidekicks
 -- ----------------------------
-DROP TABLE IF EXISTS `sidekicks`;
+
 CREATE TABLE `sidekicks` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `firstid` int(11) NOT NULL DEFAULT '0',
   `secondid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sidekicks
@@ -8917,7 +8836,7 @@ CREATE TABLE `sidekicks` (
 -- ----------------------------
 -- Table structure for skills
 -- ----------------------------
-DROP TABLE IF EXISTS `skills`;
+
 CREATE TABLE `skills` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `skillid` int(11) NOT NULL DEFAULT '0',
@@ -8930,7 +8849,7 @@ CREATE TABLE `skills` (
   PRIMARY KEY (`id`),
   KEY `skills_ibfk_1` (`characterid`),
   CONSTRAINT `skills_ibfk_1` FOREIGN KEY (`characterid`) REFERENCES `characters` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=34062 DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=34062 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of skills
@@ -9097,18 +9016,11 @@ INSERT INTO `skills` VALUES ('34015', '4211004', '4', '7', '0', '-1', '0', '-1')
 INSERT INTO `skills` VALUES ('34016', '4211005', '4', '20', '0', '-1', '0', '-1');
 INSERT INTO `skills` VALUES ('34017', '4211006', '4', '30', '0', '-1', '0', '-1');
 INSERT INTO `skills` VALUES ('34018', '4211003', '4', '8', '0', '-1', '0', '-1');
-INSERT INTO `skills` VALUES ('34049', '2201005', '8', '11', '0', '-1', '0', '-1');
-INSERT INTO `skills` VALUES ('34050', '2201004', '8', '22', '0', '-1', '0', '-1');
-INSERT INTO `skills` VALUES ('34051', '2000000', '8', '13', '0', '-1', '0', '-1');
-INSERT INTO `skills` VALUES ('34052', '2000001', '8', '8', '0', '-1', '0', '-1');
-INSERT INTO `skills` VALUES ('34059', '1000000', '7', '4', '0', '-1', '0', '-1');
-INSERT INTO `skills` VALUES ('34060', '1001004', '7', '3', '0', '-1', '0', '-1');
-INSERT INTO `skills` VALUES ('34061', '1301006', '7', '1', '0', '-1', '0', '-1');
 
 -- ----------------------------
 -- Table structure for skills_cooldowns
 -- ----------------------------
-DROP TABLE IF EXISTS `skills_cooldowns`;
+
 CREATE TABLE `skills_cooldowns` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `charid` int(11) NOT NULL,
@@ -9117,7 +9029,7 @@ CREATE TABLE `skills_cooldowns` (
   `StartTime` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `charid` (`charid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of skills_cooldowns
@@ -9126,7 +9038,7 @@ CREATE TABLE `skills_cooldowns` (
 -- ----------------------------
 -- Table structure for spawns
 -- ----------------------------
-DROP TABLE IF EXISTS `spawns`;
+
 CREATE TABLE `spawns` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idd` int(11) NOT NULL,
@@ -9141,7 +9053,7 @@ CREATE TABLE `spawns` (
   `mobtime` int(11) DEFAULT '1000',
   `mid` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of spawns
@@ -9150,7 +9062,7 @@ CREATE TABLE `spawns` (
 -- ----------------------------
 -- Table structure for speedruns
 -- ----------------------------
-DROP TABLE IF EXISTS `speedruns`;
+
 CREATE TABLE `speedruns` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(13) NOT NULL,
@@ -9159,7 +9071,7 @@ CREATE TABLE `speedruns` (
   `time` bigint(20) NOT NULL DEFAULT '0',
   `members` varchar(1024) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of speedruns
@@ -9168,7 +9080,7 @@ CREATE TABLE `speedruns` (
 -- ----------------------------
 -- Table structure for storages
 -- ----------------------------
-DROP TABLE IF EXISTS `storages`;
+
 CREATE TABLE `storages` (
   `storageid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `accountid` int(11) NOT NULL DEFAULT '0',
@@ -9177,7 +9089,7 @@ CREATE TABLE `storages` (
   PRIMARY KEY (`storageid`),
   KEY `accountid` (`accountid`),
   CONSTRAINT `storages_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `accounts` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=gbk ;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Records of storages
@@ -9188,7 +9100,7 @@ INSERT INTO `storages` VALUES ('2', '2', '4', '0');
 -- ----------------------------
 -- Table structure for trocklocations
 -- ----------------------------
-DROP TABLE IF EXISTS `trocklocations`;
+
 CREATE TABLE `trocklocations` (
   `trockid` int(11) NOT NULL AUTO_INCREMENT,
   `characterid` int(11) DEFAULT NULL,
@@ -9196,7 +9108,7 @@ CREATE TABLE `trocklocations` (
   `vip` int(11) NOT NULL,
   PRIMARY KEY (`trockid`),
   KEY `characterid` (`characterid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of trocklocations
@@ -9205,14 +9117,14 @@ CREATE TABLE `trocklocations` (
 -- ----------------------------
 -- Table structure for wishlist
 -- ----------------------------
-DROP TABLE IF EXISTS `wishlist`;
+
 CREATE TABLE `wishlist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `characterid` int(11) NOT NULL,
   `sn` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `characterid` (`characterid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
 
 -- ----------------------------
 -- Records of wishlist
@@ -9221,12 +9133,12 @@ CREATE TABLE `wishlist` (
 -- ----------------------------
 -- Table structure for wz_facedata
 -- ----------------------------
-DROP TABLE IF EXISTS `wz_facedata`;
+
 CREATE TABLE `wz_facedata` (
   `faceid` int(11) NOT NULL,
   `name` tinytext CHARACTER SET utf8,
   PRIMARY KEY (`faceid`)
-) ENGINE=MyISAM DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of wz_facedata
@@ -9253,12 +9165,12 @@ INSERT INTO `wz_facedata` VALUES ('21008', '女人脸9');
 -- ----------------------------
 -- Table structure for wz_hairdata
 -- ----------------------------
-DROP TABLE IF EXISTS `wz_hairdata`;
+
 CREATE TABLE `wz_hairdata` (
   `hairid` int(11) NOT NULL,
   `name` tinytext CHARACTER SET utf8,
   PRIMARY KEY (`hairid`)
-) ENGINE=MyISAM DEFAULT CHARSET=gbk;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of wz_hairdata
@@ -9732,7 +9644,7 @@ INSERT INTO `wz_hairdata` VALUES ('31122', '橙色中学女生');
 -- ----------------------------
 -- Table structure for wz_itemadddata
 -- ----------------------------
-DROP TABLE IF EXISTS `wz_itemadddata`;
+
 CREATE TABLE `wz_itemadddata` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `itemid` int(11) NOT NULL,
@@ -9740,7 +9652,7 @@ CREATE TABLE `wz_itemadddata` (
   `subkey` varchar(255) NOT NULL DEFAULT '0',
   `value` varchar(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of wz_itemadddata
@@ -9749,7 +9661,7 @@ CREATE TABLE `wz_itemadddata` (
 -- ----------------------------
 -- Table structure for wz_itemdata
 -- ----------------------------
-DROP TABLE IF EXISTS `wz_itemdata`;
+
 CREATE TABLE `wz_itemdata` (
   `itemid` int(11) NOT NULL,
   `name` tinytext,
@@ -9774,7 +9686,7 @@ CREATE TABLE `wz_itemdata` (
   `create` int(11) NOT NULL DEFAULT '0',
   `afterImage` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`itemid`)
-) ENGINE=MyISAM DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of wz_itemdata
@@ -12949,7 +12861,7 @@ INSERT INTO `wz_itemdata` VALUES ('1702017', '', '', '', '1', '-1.0', '-1', '0',
 -- ----------------------------
 -- Table structure for wz_itemequipdata
 -- ----------------------------
-DROP TABLE IF EXISTS `wz_itemequipdata`;
+
 CREATE TABLE `wz_itemequipdata` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `itemid` int(11) NOT NULL,
@@ -12957,7 +12869,7 @@ CREATE TABLE `wz_itemequipdata` (
   `key` varchar(30) NOT NULL,
   `value` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11605 DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=11605 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of wz_itemequipdata
@@ -24570,7 +24482,7 @@ INSERT INTO `wz_itemequipdata` VALUES ('11604', '1702017', '-1', 'cash', '1');
 -- ----------------------------
 -- Table structure for wz_itemrewarddata
 -- ----------------------------
-DROP TABLE IF EXISTS `wz_itemrewarddata`;
+
 CREATE TABLE `wz_itemrewarddata` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `itemid` int(11) NOT NULL,
@@ -24581,7 +24493,7 @@ CREATE TABLE `wz_itemrewarddata` (
   `worldMsg` varchar(255) NOT NULL DEFAULT '',
   `effect` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of wz_itemrewarddata
@@ -24590,7 +24502,7 @@ CREATE TABLE `wz_itemrewarddata` (
 -- ----------------------------
 -- Table structure for wz_mobskilldata
 -- ----------------------------
-DROP TABLE IF EXISTS `wz_mobskilldata`;
+
 CREATE TABLE `wz_mobskilldata` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `skillid` int(11) NOT NULL,
@@ -24611,7 +24523,7 @@ CREATE TABLE `wz_mobskilldata` (
   `rby` int(11) NOT NULL DEFAULT '0',
   `once` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=72 DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=72 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of wz_mobskilldata
@@ -24691,7 +24603,7 @@ INSERT INTO `wz_mobskilldata` VALUES ('71', '131', '1', '100', '5', '800', '1', 
 -- ----------------------------
 -- Table structure for wz_oxdata
 -- ----------------------------
-DROP TABLE IF EXISTS `wz_oxdata`;
+
 CREATE TABLE `wz_oxdata` (
   `questionset` smallint(6) NOT NULL DEFAULT '0',
   `questionid` smallint(6) NOT NULL DEFAULT '0',
@@ -24699,7 +24611,7 @@ CREATE TABLE `wz_oxdata` (
   `display` varchar(200) NOT NULL DEFAULT '',
   `answer` enum('o','x') NOT NULL,
   PRIMARY KEY (`questionset`,`questionid`)
-) ENGINE=MyISAM DEFAULT CHARSET=gbk ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of wz_oxdata
@@ -24708,7 +24620,7 @@ CREATE TABLE `wz_oxdata` (
 -- ----------------------------
 -- Table structure for wz_questcompletedata
 -- ----------------------------
-DROP TABLE IF EXISTS `wz_questcompletedata`;
+
 CREATE TABLE `wz_questcompletedata` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `questid` int(11) NOT NULL DEFAULT '0',
@@ -24986,7 +24898,7 @@ INSERT INTO `wz_questcompletedata` VALUES ('289', '7000002', 'item', '4000082', 
 -- ----------------------------
 -- Table structure for wz_questdata
 -- ----------------------------
-DROP TABLE IF EXISTS `wz_questdata`;
+
 CREATE TABLE `wz_questdata` (
   `questid` int(11) NOT NULL,
   `name` varchar(1024) NOT NULL,
@@ -25044,7 +24956,7 @@ INSERT INTO `wz_questdata` VALUES ('7000002', '扎昆任务第三阶段', '20300
 -- ----------------------------
 -- Table structure for wz_questpartydata
 -- ----------------------------
-DROP TABLE IF EXISTS `wz_questpartydata`;
+
 CREATE TABLE `wz_questpartydata` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `questid` int(11) NOT NULL DEFAULT '0',
@@ -25063,7 +24975,7 @@ CREATE TABLE `wz_questpartydata` (
 -- ----------------------------
 -- Table structure for wz_questreqdata
 -- ----------------------------
-DROP TABLE IF EXISTS `wz_questreqdata`;
+
 CREATE TABLE `wz_questreqdata` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `questid` int(11) NOT NULL DEFAULT '0',
@@ -25133,7 +25045,7 @@ INSERT INTO `wz_questreqdata` VALUES ('60178', '7000002', 'lvmin', '50', '50');
 -- ----------------------------
 -- Table structure for wz_questrewarddata
 -- ----------------------------
-DROP TABLE IF EXISTS `wz_questrewarddata`;
+
 CREATE TABLE `wz_questrewarddata` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `questId` int(11) NOT NULL DEFAULT '0',
@@ -25468,7 +25380,7 @@ INSERT INTO `wz_questrewarddata` VALUES ('12269', '7000002', 'item', '4001017', 
 -- ----------------------------
 -- Table structure for wz_queststatus
 -- ----------------------------
-DROP TABLE IF EXISTS `wz_queststatus`;
+
 CREATE TABLE `wz_queststatus` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `questid` int(11) NOT NULL,
