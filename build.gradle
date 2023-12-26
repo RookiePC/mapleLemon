@@ -16,7 +16,7 @@ repositories {
 
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
-    implementation 'io.netty:netty-all:4.1.32.Final'
+    implementation 'io.netty:netty-all:4.1.104.Final'
     implementation 'ch.qos.logback:logback-core:1.2.3'
     implementation 'ch.qos.logback:logback-classic:1.2.3'
     implementation 'com.alibaba:druid:1.1.12'
