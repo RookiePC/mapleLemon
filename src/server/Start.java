@@ -97,28 +97,28 @@ public class Start {
         this.ivCheck = Boolean.parseBoolean(ServerProperties.getProperty("ivCheck", "false"));
         if ((ServerProperties.getProperty("admin", false)) || (ServerConstants.USE_LOCALHOST)) {
             ServerConstants.USE_FIXED_IV = false;
-            System.out.println("[!!! 已开启只能管理员登录模式 !!!]");
+            MapleLogger.info("[!!! 已开启只能管理员登录模式 !!!]");
         }
         // @TODO 放在用户登录的时候处理
         AccountsDao accountD = new AccountsDao();
         accountD.updateLoginStateToZero();
 
-        System.out.println("正在加载服务端...");
-        System.out.println("当前操作系统: " + System.getProperty("sun.desktop"));
+        MapleLogger.info("正在加载服务端...");
+        MapleLogger.info("当前操作系统: " + System.getProperty("sun.desktop"));
         World.init();
-        System.out.println("服务器地址: " + ServerProperties.getProperty("channel.interface", ServerConstants.IP) + ":" + LoginServer.DEFAULT_PORT);
-        System.out.println("游戏版本: " + ServerConstants.MAPLE_TYPE + " v." + ServerConstants.MAPLE_VERSION + "." + ServerConstants.MAPLE_PATCH);
-        System.out.println("主服务器: " + WorldConstants.getMainWorld().name());
+        MapleLogger.info("服务器地址: " + ServerProperties.getProperty("channel.interface", ServerConstants.IP) + ":" + LoginServer.DEFAULT_PORT);
+        MapleLogger.info("游戏版本: " + ServerConstants.MAPLE_TYPE + " v." + ServerConstants.MAPLE_VERSION + "." + ServerConstants.MAPLE_PATCH);
+        MapleLogger.info("主服务器: " + WorldConstants.getMainWorld().name());
         runTimerThread();
         loadMapleData(false);
 
         System.out.print("加载登入服务...");
         LoginServer.run_startup_configurations();
 
-        System.out.println("正在加载频道...");
+        MapleLogger.info("正在加载频道...");
         ChannelServer.startChannel_Main();
 
-        System.out.println("频道加载完成!\r\n");
+        MapleLogger.info("频道加载完成!\r\n");
         System.out.print("正在加载商城...");
         CashShopServer.run_startup_configurations();
 
@@ -159,11 +159,11 @@ public class Start {
         long ms = now % 1000;
         if (ServerProperties.getProperty("aotoSave", false)) {
             DatabaseBackup.getInstance().startTasking();
-            System.out.println("启动数据库自动备份!");
+            MapleLogger.info("启动数据库自动备份!");
         }
 //        ManagerSin.main(ServerConstants.GUI);
-        System.out.println("加载完成, 耗时: " + seconds + "秒" + ms + "毫秒\r\n");
-        System.out.println("服务端开启完毕，可以登入游戏了！");
+        MapleLogger.info("加载完成, 耗时: " + seconds + "秒" + ms + "毫秒\r\n");
+        MapleLogger.info("服务端开启完毕，可以登入游戏了！");
     }
 
     /**
@@ -179,28 +179,28 @@ public class Start {
         Timer.EventTimer.getInstance().start();
         Timer.BuffTimer.getInstance().start();
         Timer.PingTimer.getInstance().start();
-        System.out.println("完成!\r\n");
+        MapleLogger.info("完成!\r\n");
     }
 
     public static void loadMapleData(boolean reload) {
-        System.out.println("载入数据(因为数据量大可能比较久而且内存消耗会飙升)");
+        MapleLogger.info("载入数据(因为数据量大可能比较久而且内存消耗会飙升)");
 
-        System.out.println("加载等级经验数据");
+        MapleLogger.info("加载等级经验数据");
         GameConstants.LoadExp();
 
-        System.out.println("加载任务数据");
+        MapleLogger.info("加载任务数据");
         //加载任务信息
         MapleLifeFactory.loadQuestCounts(reload);
         //加载转存到数据库的任务信息
         MapleQuest.initQuests(reload);
 
-        System.out.println("加载爆物数据");
+        MapleLogger.info("加载爆物数据");
         //加载爆物数据
         MapleMonsterInformationProvider.getInstance().addExtra();
         //加载全域爆物数据
         MapleMonsterInformationProvider.getInstance().load();
 
-        System.out.println("加载道具数据");
+        MapleLogger.info("加载道具数据");
         //加载道具信息(从WZ)
         MapleItemInformationProvider.getInstance().runEtc(reload);
         //加载道具信息(从SQL)
@@ -208,20 +208,20 @@ public class Start {
         //加载发型脸型
         MapleItemInformationProvider.getInstance().loadHairFace(reload);
 
-        System.out.println("加载技能数据");
+        MapleLogger.info("加载技能数据");
         //加载技能
         SkillFactory.loadAllSkills(reload);
 
         MobSkillFactory.getInstance(); //载入怪物技能
 
-        System.out.println("loadSpeedRuns");
+        MapleLogger.info("loadSpeedRuns");
         //?
         SpeedRunner.loadSpeedRuns(reload);
 
-        System.out.println("加载商城道具数据");
+        MapleLogger.info("加载商城道具数据");
         //加载商城道具信息
         CashItemFactory.getInstance().initialize(reload);
-        System.out.println("数据载入完成!\r\n");
+        MapleLogger.info("数据载入完成!\r\n");
     }
 
     public static void printSection(String s) {
@@ -229,7 +229,7 @@ public class Start {
         while (s.getBytes().length < 79) {
             s = "=" + s;
         }
-        System.out.println(s);
+        MapleLogger.info(s);
     }
 
     public static void main(String[] args) {
@@ -254,7 +254,7 @@ public class Start {
             srvSocket = new ServerSocket(srvPort);
         } catch (IOException ex) {
             if (ex.getMessage().contains("Address already in use: JVM_Bind")) {
-                System.out.println("在一台主机上同时只能启动一个进程(Only one instance allowed)。");
+                MapleLogger.info("在一台主机上同时只能启动一个进程(Only one instance allowed)。");
             }
             System.exit(0);
         }
@@ -292,7 +292,7 @@ public class Start {
                 MapleLogger.info("发现复制装备 该装备的唯一ID: " + i + " 已进行删除处理..");
             }
         } catch (SQLException ex) {
-            System.out.println("[EXCEPTION] 清理复制装备出现错误." + ex);
+            MapleLogger.info("[EXCEPTION] 清理复制装备出现错误." + ex);
         } finally {
             try {
                 con.close();

@@ -7,6 +7,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import constants.ServerConstants;
+import tools.MapleLogger;
 
 public class ServerConnection {
 
@@ -43,10 +44,10 @@ public class ServerConnection {
                     .childOption(ChannelOption.SO_KEEPALIVE, true)
                     .childHandler(new ServerInitializer(this.world, this.channels));
                 channel = boot.bind(port).sync().channel().closeFuture().channel();
-            System.out.println("Listening to port: " + port);
+            MapleLogger.info("Listening to port: " + port);
         } catch(Exception e) {
             e.printStackTrace();
-            System.out.printf("Connection to %s failed.", channel.remoteAddress());
+            MapleLogger.info(String.format("Connection to %s failed.", channel.remoteAddress()));
         }
     }
 
