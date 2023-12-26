@@ -117,8 +117,8 @@ CREATE TABLE `accounts` (
 -- ----------------------------
 -- Records of accounts
 -- ----------------------------
-INSERT INTO `accounts` VALUES ('1', 'icelemon1314', 'd033e22ae348aeb5660fc2140aec35850c4da997', null, null, null, '0', '0', '2016-01-08 00:48:33', '2015-04-06 17:56:21', '0000-00-00', null, null, '0', null, null, null, '0000-00-00 00:00:00', null, '0', '/127.0.0.1', '44444', '33333', '0', '2016-01-08 00:36:03', null, null, '1966179', '217022');
-INSERT INTO `accounts` VALUES ('2', 'icelemon0000', 'd033e22ae348aeb5660fc2140aec35850c4da997', null, null, null, '0', '0', '2016-01-07 13:49:21', '2015-11-02 13:05:34', '0000-00-00', null, null, '0', null, null, null, '0000-00-00 00:00:00', null, '0', '/127.0.0.1', '0', '0', '0', '2016-01-07 13:47:11', null, null, '0', '0');
+INSERT INTO `accounts` VALUES ('1', 'icelemon1314', 'd033e22ae348aeb5660fc2140aec35850c4da997', null, null, null, '0', '0', '2016-01-08 00:48:33', '2015-04-06 17:56:21', '2000-01-01', null, null, '0', null, null, null, '0000-00-00 00:00:00', null, '0', '/127.0.0.1', '44444', '33333', '0', '2016-01-08 00:36:03', null, null, '1966179', '217022');
+INSERT INTO `accounts` VALUES ('2', 'icelemon0000', 'd033e22ae348aeb5660fc2140aec35850c4da997', null, null, null, '0', '0', '2016-01-07 13:49:21', '2015-11-02 13:05:34', '2000-01-01', null, null, '0', null, null, null, '0000-00-00 00:00:00', null, '0', '/127.0.0.1', '0', '0', '0', '2016-01-07 13:47:11', null, null, '0', '0');
 
 -- ----------------------------
 -- Table structure for characters
