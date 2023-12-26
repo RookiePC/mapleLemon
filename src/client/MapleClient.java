@@ -461,6 +461,7 @@ public class MapleClient implements Serializable {
            this.session.close();
            throw new DatabaseException("Account doesn't exist or is banned");
         }
+        // 目前没有发现有什么需要处理的生日逻辑
         birthday = account.getBirthday();
         state = account.getLoggedin();
         if ((state == MapleClient.LOGIN_SERVER_TRANSITION || state == MapleClient.CHANGE_CHANNEL) && (account.getLastlogin().getTime() + 20000L < System.currentTimeMillis())) {

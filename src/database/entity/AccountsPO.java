@@ -34,7 +34,7 @@ public class AccountsPO {
     @Temporal(TemporalType.DATE)
     private Calendar birthday;
     private String email;
-    private String qq;
+//    private String qq;
     private Byte banned;
     private String banreason;
     private String macs;
@@ -143,13 +143,13 @@ public class AccountsPO {
         this.email = email;
     }
 
-    public String getQq() {
-        return qq;
-    }
+//    public String getQq() {
+//        return qq;
+//    }
 
-    public void setQq(String qq) {
-        this.qq = qq;
-    }
+//    public void setQq(String qq) {
+//        this.qq = qq;
+//    }
 
     public Byte getBanned() {
         return banned;
